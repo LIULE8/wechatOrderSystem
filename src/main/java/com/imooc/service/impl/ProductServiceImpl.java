@@ -1,6 +1,7 @@
 package com.imooc.service.impl;
 
 import com.imooc.dataobject.ProductInfo;
+import com.imooc.enums.ProductStatusEnum;
 import com.imooc.repository.ProductRepository;
 import com.imooc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<ProductInfo> findUpAll(Integer productStatus) {
-    return productRepository.findByProductStatus(0);
+  public List<ProductInfo> findUpAll() {
+    return productRepository.findByProductStatus(ProductStatusEnum.UP.getCode());
   }
 
   @Override

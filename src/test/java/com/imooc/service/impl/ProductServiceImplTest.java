@@ -43,7 +43,7 @@ public class ProductServiceImplTest {
       add(new ProductInfo());
     }});
 
-    List<ProductInfo> productInfoList = productService.findUpAll(ProductStatusEnum.UP.getCode());
+    List<ProductInfo> productInfoList = productService.findUpAll();
 
     Assert.assertNotEquals(0, productInfoList.size());
   }
@@ -75,8 +75,6 @@ public class ProductServiceImplTest {
     ProductInfo saveProductInfo = productService.save(productInfo);
 
     Assert.assertNotNull(saveProductInfo);
-
   }
-
 
 }

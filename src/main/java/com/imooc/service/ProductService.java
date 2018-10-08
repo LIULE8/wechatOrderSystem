@@ -18,10 +18,9 @@ public interface ProductService {
 
   /**
    * 查询所有在架的商品
-   * @param productStatus
    * @return
    */
-  List<ProductInfo> findUpAll(Integer productStatus);
+  List<ProductInfo> findUpAll();
 
   Page<ProductInfo> findAll(Pageable pageable);
 

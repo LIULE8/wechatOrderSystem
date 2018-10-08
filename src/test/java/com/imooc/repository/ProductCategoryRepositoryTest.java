@@ -20,10 +20,10 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 public class ProductCategoryRepositoryTest {
 
   @Autowired
-  private TestEntityManager entityManager;
+  private ProductCategoryRepository productCategoryRepository;
 
   @Autowired
-  private ProductCategoryRepository productCategoryRepository;
+  private TestEntityManager entityManager;
 
   @Test
   public void should_return_a_product_category_when_call_findById_and_input_1() {

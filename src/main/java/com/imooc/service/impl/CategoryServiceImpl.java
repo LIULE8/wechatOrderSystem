@@ -25,10 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public ProductCategory findOne(Integer categoryId) {
     Optional<ProductCategory> productCategoryOptional = productCategoryRepository.findById(categoryId);
-    if (productCategoryOptional.isPresent()) {
-      return productCategoryOptional.get();
-    }
-    throw new NullPointerException("this categoryId can not find any category");
+    return productCategoryOptional.orElse(null);
   }
 
   @Override

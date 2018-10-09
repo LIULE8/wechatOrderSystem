@@ -32,9 +32,11 @@ public class CategoryServiceImplTest {
     Assert.assertNotNull(productCategory);
   }
 
-  @Test(expected = NullPointerException.class)
-  public void should_throw_null_point_exception_when_invoke_findOne_method_and_input_1() {
-    categoryService.findOne(1);
+  @Test
+  public void should_return_null_when_invoke_findOne_method_and_input_1() {
+    ProductCategory productCategory = categoryService.findOne(1);
+
+    Assert.assertNull(productCategory);
   }
 
   @Test
@@ -66,10 +68,9 @@ public class CategoryServiceImplTest {
   @Test
   public void should_return_a_category_with_category_id_when_save_a_new_category() {
     ProductCategory productCategory = new ProductCategory();
-    ProductCategory savedProductCategory = new ProductCategory();
+    productCategory.setCategoryId(1);
     when(productCategoryRepository.save(productCategory)).thenReturn(productCategory);
-    savedProductCategory.setCategoryId(1);
-    savedProductCategory = categoryService.save(productCategory);
-    Assert.assertEquals(Integer.valueOf(1), savedProductCategory.getCategoryId());
+    productCategory = categoryService.save(productCategory);
+    Assert.assertEquals(Integer.valueOf(1), productCategory.getCategoryId());
   }
 }

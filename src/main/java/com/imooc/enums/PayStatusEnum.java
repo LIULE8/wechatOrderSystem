@@ -4,28 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 描述: 商品状态
+ * 描述: 支付状态
  *
  * @author LIULE9
- * @create 2018-10-08 2:44 PM
+ * @create 2018-10-09 9:25 AM
  */
 @Getter
 @AllArgsConstructor
-public enum ProductStatusEnum {
+public enum PayStatusEnum {
 
   /**
-   * 商品在架
+   * 未支付
    */
-  UP(0, "在架"),
+  WAIT(0, "等待支付"),
 
   /**
-   * 商品下架
+   * 支付成功
    */
-  DOWN(1, "下架")
+  SUCCESS(1, "支付成功"),
   ;
 
   private Integer code;
-
   private String message;
-
 }

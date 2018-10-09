@@ -4,28 +4,30 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 描述: 商品状态
+ * 描述: 订单状态
  *
  * @author LIULE9
- * @create 2018-10-08 2:44 PM
+ * @create 2018-10-09 9:21 AM
  */
 @Getter
 @AllArgsConstructor
-public enum ProductStatusEnum {
+public enum OrderStatusEnum {
 
   /**
-   * 商品在架
+   * 新订单
    */
-  UP(0, "在架"),
-
+  New(0, "新订单"),
   /**
-   * 商品下架
+   * 完结
    */
-  DOWN(1, "下架")
+  FINISHED(1, "完结"),
+  /**
+   * 已取消
+   */
+  CANCEL(2, "已取消")
   ;
 
   private Integer code;
-
   private String message;
 
 }

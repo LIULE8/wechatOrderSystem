@@ -16,7 +16,6 @@ import javax.persistence.Id;
  * @author LIULE9
  */
 @Entity
-@DynamicUpdate //允许db自动更新的注解，可以用来允许db自动更新update时间
 @Data
 @ToString
 @EqualsAndHashCode

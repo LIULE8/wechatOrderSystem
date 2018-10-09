@@ -15,7 +15,6 @@ import java.math.BigDecimal;
  * @create 2018-10-08 2:34 PM
  */
 @Entity
-@DynamicUpdate
 @Data
 @ToString
 @EqualsAndHashCode

@@ -81,8 +81,8 @@ public class OrderServiceImpl implements OrderService {
 
     //3. 写入订单数据库（orderMaster和orderDetail）
     OrderMaster orderMaster = new OrderMaster();
+    orderDTO.setOrderId(orderId);
     BeanUtils.copyProperties(orderDTO, orderMaster);
-    orderMaster.setOrderId(orderId);
     orderMaster.setOrderAmount(orderAmount);
     orderMaster.setOrderStatus(OrderStatusEnum.New.getCode());
     orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
@@ -163,14 +163,14 @@ public class OrderServiceImpl implements OrderService {
   @Transactional
   public OrderDTO finish(OrderDTO orderDTO) {
     //判断订单状态
-    if(!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())){
+    if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())) {
       log.error("【完结订单】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
       throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
     }
 
     orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
     OrderMaster orderMaster = new OrderMaster();
-    BeanUtils.copyProperties(orderDTO,orderMaster);
+    BeanUtils.copyProperties(orderDTO, orderMaster);
 
     //修改订单状态
     OrderMaster updateResult = orderMasterRepository.save(orderMaster);
@@ -187,20 +187,20 @@ public class OrderServiceImpl implements OrderService {
   public OrderDTO paid(OrderDTO orderDTO) {
 
     //判断订单状态
-    if(!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())){
+    if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())) {
       log.error("【订单支付】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
       throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
     }
 
     //判断支付状态
-    if(!orderDTO.getPayStatus().equals(PayStatusEnum.WAIT.getCode())){
+    if (!orderDTO.getPayStatus().equals(PayStatusEnum.WAIT.getCode())) {
       log.error("【订单支付】支付状态不正确, orderDTO={}", orderDTO);
       throw new SellException(ResultEnum.ORDER_PAY_STATUS_ERROR);
     }
 
     orderDTO.setPayStatus(PayStatusEnum.SUCCESS.getCode());
     OrderMaster orderMaster = new OrderMaster();
-    BeanUtils.copyProperties(orderDTO,orderMaster);
+    BeanUtils.copyProperties(orderDTO, orderMaster);
 
     //修改支付状态
     OrderMaster updateResult = orderMasterRepository.save(orderMaster);

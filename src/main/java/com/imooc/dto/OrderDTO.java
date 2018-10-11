@@ -1,6 +1,8 @@
 package com.imooc.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.dataobject.OrderDetail;
+import com.imooc.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
 import javax.persistence.Id;
@@ -15,6 +17,7 @@ import java.util.List;
  * @create 2018-10-09 10:18 AM
  */
 @Data
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
   /**
@@ -60,11 +63,17 @@ public class OrderDTO {
   /**
    * 创建时间
    */
+  @JsonSerialize(
+      using = Date2LongSerializer.class
+  )
   private Date createTime;
 
   /**
    * 更新时间
    */
+  @JsonSerialize(
+      using = Date2LongSerializer.class
+  )
   private Date updateTime;
 
   /**

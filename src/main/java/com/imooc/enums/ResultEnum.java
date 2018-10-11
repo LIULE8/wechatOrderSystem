@@ -14,6 +14,11 @@ import lombok.Getter;
 public enum ResultEnum {
 
   /**
+   * 判断表单参数
+   */
+  PARAM_ERROR(1, "参数不正确"),
+
+  /**
    * 商品不存在
    */
   PRODUCT_NOT_EXIST(10, "商品不存在"),
@@ -51,7 +56,17 @@ public enum ResultEnum {
   /**
    * 支付状态错误
    */
-  ORDER_PAY_STATUS_ERROR(17, "支付状态错误");
+  ORDER_PAY_STATUS_ERROR(17, "支付状态错误"),
+
+  /**
+   * 购物车不能为空
+   */
+  CART_EMPTY(18, "购物车不能为空"),
+
+  /**
+   * 该订单不属于当前用户
+   */
+  ORDER_OWNER_ERROR(19, "该订单不属于当前用户");
 
   private Integer code;
 

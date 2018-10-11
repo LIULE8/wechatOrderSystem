@@ -12,8 +12,9 @@ import java.util.List;
  */
 public class ResultVOUtil {
 
-  public static ResultVO success(List<?> object){
-    ResultVO resultVO = new ResultVO<>();
+  @SuppressWarnings("all")
+  public static ResultVO success(Object object){
+    ResultVO resultVO = new ResultVO();
     resultVO.setData(object);
     resultVO.setCode(0);
     resultVO.setMsg("成功");

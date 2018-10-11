@@ -2,8 +2,6 @@ package com.imooc.vo;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * 描述: http请求返回的最外层对象
  *
@@ -11,6 +9,7 @@ import java.util.List;
  * @create 2018-10-08 7:19 PM
  */
 @Data
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultVO<T> {
   /**
    * 错误码
@@ -25,5 +24,5 @@ public class ResultVO<T> {
   /**
    * 具体内容
    */
-  private List<T> data;
+  private T data;
 }

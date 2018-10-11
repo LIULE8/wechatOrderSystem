@@ -26,7 +26,7 @@ public interface BuyerService {
    * @param orderId
    * @return
    */
-  OrderDTO cancelOrder(String openid, String orderId);
+  void cancelOrder(String openid, String orderId);
 
 
 }

@@ -32,13 +32,13 @@ public class BuyerServiceImpl implements BuyerService {
   }
 
   @Override
-  public OrderDTO cancelOrder(String openid, String orderId) {
+  public void cancelOrder(String openid, String orderId) {
     OrderDTO orderDTO = checkOrderOwner(openid, orderId);
     if(orderDTO == null){
         log.error("【取消订单】查不到改的订单, orderId={}", orderId);
         throw new SellException(ResultEnum.ORDER_NOT_EXIST);
     }
-    return orderService.cancel(orderDTO);
+    orderService.cancel(orderDTO);
   }
 
 

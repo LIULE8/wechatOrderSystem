@@ -13,3 +13,11 @@ spring:
 server:
   servlet:
     context-path: /sell
+
+wechat:
+  mpAppId: wxb340ae8f46c23541
+  mpAppSecret: 5708ddb4e1d7f5253d2a50470dfd2157
+  mchId: 1409146202
+  mchKey: c976503d34ca432c601361f969fd8d85
+  keyPath: /var/weixin_cert/h5.p12
+  notifyUrl: http://cell.nat300.top/sell/pay/notify

@@ -13,6 +13,7 @@ import com.imooc.exception.SellException;
 import com.imooc.repository.OrderDetailRepository;
 import com.imooc.repository.OrderMasterRepository;
 import com.imooc.service.OrderService;
+import com.imooc.service.PayService;
 import com.imooc.service.ProductService;
 import com.imooc.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -43,15 +44,18 @@ public class OrderServiceImpl implements OrderService {
 
   private final ProductService productService;
 
+  private final PayService payService;
+
   private final OrderDetailRepository orderDetailRepository;
 
   private final OrderMasterRepository orderMasterRepository;
 
   @Autowired
-  public OrderServiceImpl(ProductService productService, OrderDetailRepository orderDetailRepository, OrderMasterRepository orderMasterRepository) {
+  public OrderServiceImpl(ProductService productService, OrderDetailRepository orderDetailRepository, OrderMasterRepository orderMasterRepository, PayService payService) {
     this.productService = productService;
     this.orderDetailRepository = orderDetailRepository;
     this.orderMasterRepository = orderMasterRepository;
+    this.payService = payService;
   }
 
   @Override
@@ -123,11 +127,12 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  @Transactional
-  public OrderDTO cancel(OrderDTO orderDTO) {
+  @Transactional(rollbackOn = SellException.class)
+  public void cancel(OrderDTO orderDTO) {
+
     //判断订单状态
     if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())) {
-      log.error("【取消订单】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
+      log.error("【取消订单】 订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
       throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
     }
 
@@ -143,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
 
     //返还库存
     if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
-      log.error("【取消订单】订单中无商品详情, orderDTO={}", orderDTO);
+      log.error("【取消订单】 订单中无商品详情, orderDTO={}", orderDTO);
       throw new SellException(ResultEnum.ORDER_DETAIL_EMPTY);
     }
 
@@ -154,17 +159,17 @@ public class OrderServiceImpl implements OrderService {
 
     //如果已支付, 需要退款
     if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
-      //TODO
+      payService.refund(orderDTO);
     }
-    return orderDTO;
   }
 
   @Override
   @Transactional
   public OrderDTO finish(OrderDTO orderDTO) {
+
     //判断订单状态
     if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())) {
-      log.error("【完结订单】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
+      log.error("【完结订单】 订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
       throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
     }
 
@@ -183,18 +188,18 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  @Transactional
-  public OrderDTO paid(OrderDTO orderDTO) {
+  @Transactional(rollbackOn = SellException.class)
+  public void paid(OrderDTO orderDTO) {
 
     //判断订单状态
     if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.New.getCode())) {
-      log.error("【订单支付】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
+      log.error("【订单支付】 订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
       throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
     }
 
     //判断支付状态
     if (!orderDTO.getPayStatus().equals(PayStatusEnum.WAIT.getCode())) {
-      log.error("【订单支付】支付状态不正确, orderDTO={}", orderDTO);
+      log.error("【订单支付】 支付状态不正确, orderDTO={}", orderDTO);
       throw new SellException(ResultEnum.ORDER_PAY_STATUS_ERROR);
     }
 
@@ -208,7 +213,6 @@ public class OrderServiceImpl implements OrderService {
       log.error("【订单支付】 更新失败, orderMaster={}", orderMaster);
       throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
     }
-
-    return orderDTO;
   }
+
 }

@@ -45,7 +45,13 @@ public class BuyerOrderController {
     this.buyerService = buyerService;
   }
 
-  //创建订单
+  /**
+   * 创建订单
+   *
+   * @param orderForm
+   * @param bindingResult
+   * @return
+   */
   @SuppressWarnings("all")
   @PostMapping("/create")
   public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm, BindingResult bindingResult) {
@@ -69,7 +75,14 @@ public class BuyerOrderController {
 
   }
 
-  //订单列表
+  /**
+   * 订单列表
+   *
+   * @param openid
+   * @param page
+   * @param size
+   * @return
+   */
   @SuppressWarnings("all")
   @GetMapping("/list")
   public ResultVO<List<OrderDTO>> getList(@RequestParam("openid") String openid,
@@ -86,7 +99,13 @@ public class BuyerOrderController {
 
   }
 
-  //单个订单详情
+  /**
+   * 单个订单详情
+   *
+   * @param openid
+   * @param orderId
+   * @return
+   */
   @SuppressWarnings("all")
   @GetMapping("/detail")
   public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
@@ -107,8 +126,13 @@ public class BuyerOrderController {
   }
 
 
-  //取消订单
-  @SuppressWarnings("all")
+  /**
+   * 取消订单
+   *
+   * @param openid
+   * @param orderId
+   * @return
+   */
   @PostMapping("/cancel")
   public ResultVO cancel(@RequestParam("openid") String openid,
                          @RequestParam("orderId") String orderId) {
@@ -123,7 +147,7 @@ public class BuyerOrderController {
       throw new SellException(ResultEnum.PARAM_ERROR);
     }
 
-   buyerService.cancelOrder(openid,orderId);
+    buyerService.cancelOrder(openid, orderId);
 
     return ResultVOUtil.success();
   }

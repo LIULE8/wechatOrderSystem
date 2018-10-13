@@ -108,6 +108,11 @@ public enum ResultEnum {
    * 登录失败
    */
   LOGIN_FAIL(26,"登录失败，登录信息不正确"),
+
+  /**
+   * 登出成功
+   */
+  LOGOUT_SUCCESS(27,"登出成功"),
   ;
 
   private Integer code;

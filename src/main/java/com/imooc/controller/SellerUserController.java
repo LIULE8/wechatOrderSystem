@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -70,7 +71,21 @@ public class SellerUserController {
   }
 
   @GetMapping("/logout")
-  public void logout() {
+  public ModelAndView logout(HttpServletRequest request,
+                             HttpServletResponse response) {
+    //1. 从cookie里查询
+    Cookie cookie = CookieUtil.getCookie(request, CookieConstant.TOKEN);
+    if (cookie != null){
+      //2. 清除redis token
+      String token = RedisConstant.TOKEN_PREFIX + cookie.getValue();
+      redisTemplate.opsForValue().getOperations().delete(token);
 
+      //3. 清除cookie token
+      CookieUtil.setCookie(response,CookieConstant.TOKEN,null,0);
+    }
+    ModelAndView modelAndView = new ModelAndView("common/success");
+    modelAndView.addObject("msg",ResultEnum.LOGOUT_SUCCESS.getMessage());
+    modelAndView.addObject("url","/sell/seller/order/list");
+    return modelAndView;
   }
 }

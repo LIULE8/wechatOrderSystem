@@ -2,6 +2,7 @@ package com.imooc.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.aspectj.apache.bcel.classfile.Code;
 
 /**
  * 描述: 订单状态
@@ -11,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum OrderStatusEnum {
+public enum OrderStatusEnum  implements CodeEnum {
 
   /**
    * 新订单

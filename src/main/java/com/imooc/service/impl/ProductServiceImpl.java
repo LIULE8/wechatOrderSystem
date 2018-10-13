@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackOn = SellException.class)
   public void increaseStock(List<CartDTO> cartDTOList) {
     for (CartDTO cartDTO : cartDTOList) {
       Optional<ProductInfo> productInfoOptional = productRepository.findById(cartDTO.getProductId());

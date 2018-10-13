@@ -13,6 +13,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResultEnum {
 
+
+  /**
+   * 成功
+   */
+  SUCCESS(0, "成功"),
+
   /**
    * 判断表单参数
    */
@@ -76,7 +82,17 @@ public enum ResultEnum {
   /**
    * 微信支付异步通知金额校验不通过
    */
-  WECHAT_NOTIFY_MONEY_VERIFY_ERROR(21, "微信支付异步通知金额校验不通过")
+  WECHAT_NOTIFY_MONEY_VERIFY_ERROR(21, "微信支付异步通知金额校验不通过"),
+
+  /**
+   * 订单取消成功
+   */
+  ORDER_CANCEL_SUCCESS(22,"订单取消成功"),
+
+  /**
+   * 订单完结成功
+   */
+  ORDER_FINISH_SUCCESS(22,"订单完结成功")
   ;
 
   private Integer code;

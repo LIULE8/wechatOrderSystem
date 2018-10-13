@@ -52,4 +52,13 @@ public interface OrderService {
    * @param orderDTO
    */
   void paid(OrderDTO orderDTO);
+
+
+  /**
+   * 查询所有订单列表
+   * @param pageable
+   * @return
+   */
+  Page<OrderDTO> findList(Pageable pageable);
+
 }

@@ -7,6 +7,7 @@ import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
 import com.imooc.repository.ProductRepository;
 import com.imooc.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import java.util.Optional;
  * @create 2018-10-08 3:53 PM
  */
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
   private final ProductRepository productRepository;
@@ -86,5 +88,36 @@ public class ProductServiceImpl implements ProductService {
 
       productRepository.save(productInfo);
     }
+  }
+
+  @Override
+  public ProductInfo offSale(String productId) {
+
+    Optional<ProductInfo> productInfoOptional = productRepository.findById(productId);
+    if (!productInfoOptional.isPresent()){
+      throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+    }
+    ProductInfo productInfo = productInfoOptional.get();
+    if (productInfo.getProductStatusEnum() == ProductStatusEnum.UP){
+      throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+    }
+    //更新
+    productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
+    return productRepository.save(productInfo);
+  }
+
+  @Override
+  public ProductInfo onSale(String productId) {
+    Optional<ProductInfo> productInfoOptional = productRepository.findById(productId);
+    if (!productInfoOptional.isPresent()){
+      throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+    }
+    ProductInfo productInfo = productInfoOptional.get();
+    if (productInfo.getProductStatusEnum() == ProductStatusEnum.DOWN){
+      throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+    }
+    //更新
+    productInfo.setProductStatus(ProductStatusEnum.UP.getCode());
+    return productRepository.save(productInfo);
   }
 }

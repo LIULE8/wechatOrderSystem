@@ -92,7 +92,12 @@ public enum ResultEnum {
   /**
    * 订单完结成功
    */
-  ORDER_FINISH_SUCCESS(22,"订单完结成功")
+  ORDER_FINISH_SUCCESS(22,"订单完结成功"),
+
+  /**
+   * 商品状态不争取
+   */
+  PRODUCT_STATUS_ERROR(23,"商品状态不正确")
   ;
 
   private Integer code;

@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ProductStatusEnum {
+public enum ProductStatusEnum implements CodeEnum{
 
   /**
    * 商品在架

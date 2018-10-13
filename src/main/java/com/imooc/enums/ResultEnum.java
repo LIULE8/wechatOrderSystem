@@ -92,17 +92,22 @@ public enum ResultEnum {
   /**
    * 订单完结成功
    */
-  ORDER_FINISH_SUCCESS(22,"订单完结成功"),
+  ORDER_FINISH_SUCCESS(23,"订单完结成功"),
 
   /**
    * 商品状态不正确
    */
-  PRODUCT_STATUS_ERROR(23,"商品状态不正确"),
+  PRODUCT_STATUS_ERROR(24,"商品状态不正确"),
 
   /**
    * 商品类目不正确
    */
-  PRODUCT_CATEGORY_ERROR(24,"商品类目不正确")
+  PRODUCT_CATEGORY_ERROR(25,"商品类目不正确"),
+
+  /**
+   * 登录失败
+   */
+  LOGIN_FAIL(26,"登录失败，登录信息不正确"),
   ;
 
   private Integer code;

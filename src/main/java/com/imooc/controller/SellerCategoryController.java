@@ -2,14 +2,11 @@ package com.imooc.controller;
 
 import com.imooc.dataobject.ProductCategory;
 import com.imooc.enums.ResultEnum;
-import com.imooc.exception.SellException;
 import com.imooc.form.CategoryFrom;
 import com.imooc.service.CategoryService;
-import org.apache.commons.codec.language.bm.Rule;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

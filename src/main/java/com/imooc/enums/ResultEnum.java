@@ -95,9 +95,14 @@ public enum ResultEnum {
   ORDER_FINISH_SUCCESS(22,"订单完结成功"),
 
   /**
-   * 商品状态不争取
+   * 商品状态不正确
    */
-  PRODUCT_STATUS_ERROR(23,"商品状态不正确")
+  PRODUCT_STATUS_ERROR(23,"商品状态不正确"),
+
+  /**
+   * 商品类目不正确
+   */
+  PRODUCT_CATEGORY_ERROR(24,"商品类目不正确")
   ;
 
   private Integer code;

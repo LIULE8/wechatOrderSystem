@@ -1,6 +1,7 @@
 package com.imooc.exception;
 
 import com.imooc.enums.ResultEnum;
+import lombok.Getter;
 
 /**
  * 描述: 自定义异常
@@ -8,6 +9,7 @@ import com.imooc.enums.ResultEnum;
  * @author LIULE9
  * @create 2018-10-09 7:38 PM
  */
+@Getter
 public class SellException extends RuntimeException {
 
   private Integer code;

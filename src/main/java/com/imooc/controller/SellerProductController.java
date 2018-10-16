@@ -11,6 +11,8 @@ import com.imooc.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -130,6 +132,9 @@ public class SellerProductController {
    * @return
    */
   @PostMapping("/save")
+//  @CachePut(cacheNames = "product", key = "123")
+//  @CacheEvict 先清除缓存，然后再存放
+  @CacheEvict(cacheNames = "product", key = "123")
   public ModelAndView save(@Valid ProductForm productForm,
                            BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
@@ -140,9 +145,9 @@ public class SellerProductController {
     }
     ProductInfo productInfo = new ProductInfo();
     //如果productId为空，说明是新增
-    if(!StringUtils.isEmpty(productForm.getProductId())){
+    if (!StringUtils.isEmpty(productForm.getProductId())) {
       productInfo = productService.findOne(productForm.getProductId());
-    }else{
+    } else {
       productForm.setProductId(KeyUtil.genUniqueKey());
     }
     if (productInfo == null) {

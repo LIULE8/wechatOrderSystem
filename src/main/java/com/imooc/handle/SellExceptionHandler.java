@@ -1,10 +1,16 @@
 package com.imooc.handle;
 
 import com.imooc.config.ProjectUrlConfig;
+import com.imooc.exception.SellException;
 import com.imooc.exception.SellerAuthorizeException;
+import com.imooc.utils.ResultVOUtil;
+import com.imooc.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -35,5 +41,12 @@ public class SellExceptionHandler {
           .concat("?returnUrl=")
           .concat(projectUrlConfig.getSell())
           .concat("/sell/seller/login"));
+  }
+
+  @ExceptionHandler(value = SellException.class)
+  @ResponseBody
+  @ResponseStatus(value = HttpStatus.FORBIDDEN)
+  public ResultVO handlerSellException(SellException e){
+    return ResultVOUtil.error(e.getCode(),e.getMessage());
   }
 }

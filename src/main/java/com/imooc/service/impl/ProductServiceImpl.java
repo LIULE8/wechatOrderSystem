@@ -9,11 +9,13 @@ import com.imooc.repository.ProductRepository;
 import com.imooc.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.RollbackException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,7 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
+//@CacheConfig(cacheNames = "product")
 public class ProductServiceImpl implements ProductService {
 
   private final ProductRepository productRepository;
@@ -36,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+//  @Cacheable(key = "123")
   public ProductInfo findOne(String productId) {
     Optional<ProductInfo> productInfoOptional = productRepository.findById(productId);
     return productInfoOptional.orElse(null);
@@ -52,6 +56,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+//  @CachePut(key = "123")
   public ProductInfo save(ProductInfo productInfo) {
     return productRepository.save(productInfo);
   }
@@ -94,11 +99,11 @@ public class ProductServiceImpl implements ProductService {
   public ProductInfo offSale(String productId) {
 
     Optional<ProductInfo> productInfoOptional = productRepository.findById(productId);
-    if (!productInfoOptional.isPresent()){
+    if (!productInfoOptional.isPresent()) {
       throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
     }
     ProductInfo productInfo = productInfoOptional.get();
-    if (productInfo.getProductStatusEnum() == ProductStatusEnum.UP){
+    if (productInfo.getProductStatusEnum() == ProductStatusEnum.UP) {
       throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
     }
     //更新
@@ -109,11 +114,11 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public ProductInfo onSale(String productId) {
     Optional<ProductInfo> productInfoOptional = productRepository.findById(productId);
-    if (!productInfoOptional.isPresent()){
+    if (!productInfoOptional.isPresent()) {
       throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
     }
     ProductInfo productInfo = productInfoOptional.get();
-    if (productInfo.getProductStatusEnum() == ProductStatusEnum.DOWN){
+    if (productInfo.getProductStatusEnum() == ProductStatusEnum.DOWN) {
       throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
     }
     //更新

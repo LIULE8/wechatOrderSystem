@@ -26,6 +26,8 @@ wechat:
   mchKey: c976503d34ca432c601361f969fd8d85
   keyPath: /var/weixin_cert/h5.p12
   notifyUrl: http://cell.nat300.top/sell/pay/notify
+  templateId:
+    orderStatus: woGQrUSg7uJJLnuh56Yf3l5vfU6P3gQvR710qGyKNzM
 
 
 project-url:

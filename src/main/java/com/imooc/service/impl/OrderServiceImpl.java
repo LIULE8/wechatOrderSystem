@@ -12,9 +12,7 @@ import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
 import com.imooc.repository.OrderDetailRepository;
 import com.imooc.repository.OrderMasterRepository;
-import com.imooc.service.OrderService;
-import com.imooc.service.PayService;
-import com.imooc.service.ProductService;
+import com.imooc.service.*;
 import com.imooc.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -46,16 +44,22 @@ public class OrderServiceImpl implements OrderService {
 
   private final PayService payService;
 
+  private final WebSocket webSocket;
+
+  private final PushMessageService pushMessageService;
+
   private final OrderDetailRepository orderDetailRepository;
 
   private final OrderMasterRepository orderMasterRepository;
 
   @Autowired
-  public OrderServiceImpl(ProductService productService, OrderDetailRepository orderDetailRepository, OrderMasterRepository orderMasterRepository, PayService payService) {
+  public OrderServiceImpl(ProductService productService, OrderDetailRepository orderDetailRepository, OrderMasterRepository orderMasterRepository, PayService payService, PushMessageService pushMessageService, WebSocket webSocket) {
     this.productService = productService;
     this.orderDetailRepository = orderDetailRepository;
     this.orderMasterRepository = orderMasterRepository;
     this.payService = payService;
+    this.pushMessageService = pushMessageService;
+    this.webSocket = webSocket;
   }
 
   @Override
@@ -96,6 +100,9 @@ public class OrderServiceImpl implements OrderService {
     List<CartDTO> cartDTOList = orderDetailList.stream().map(orderDetail ->
         new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity())).collect(Collectors.toList());
     productService.decreaseStock(cartDTOList);
+
+    //发送webSocket消息
+    webSocket.sendMessage(orderDTO.getOrderId());
 
     return orderDTO;
   }
@@ -183,6 +190,9 @@ public class OrderServiceImpl implements OrderService {
       log.error("【完结订单】 更新失败, orderMaster={}", orderMaster);
       throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
     }
+
+    //推送微信模板消息
+    pushMessageService.orderStatus(orderDTO);
 
     return orderDTO;
   }

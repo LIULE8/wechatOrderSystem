@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.88.128/sell?characterEncoding=utf-8&useSSL=false
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    host: 192.168.88.128
+    port: 6379
+
+# 项目的所有url的前缀 使所有controller路径前都加上一个sell
+server:
+  servlet:
+    context-path: /sell
+
+wechat:
+  mpAppId: wxb340ae8f46c23541
+  mpAppSecret: 5708ddb4e1d7f5253d2a50470dfd2157
+  openAppId:
+  openAppSecret:
+  mchId: 1409146202
+  mchKey: c976503d34ca432c601361f969fd8d85
+  keyPath: /var/weixin_cert/h5.p12
+  notifyUrl: http://cell.nat300.top/sell/pay/notify
+  templateId:
+    orderStatus: woGQrUSg7uJJLnuh56Yf3l5vfU6P3gQvR710qGyKNzM
+
+
+project-url:
+  wechatMpAuthorize: http://cell.nat300.top
+  wechatOpenAuthorize: http://cell.nat300.top
+  sell: http://cell.nat300.top
+
+# 设置mapper的日志级别，显示sql语句，适合开发使用，生产环境一般不用。
+logging:
+  level:
+    com.imooc.dataobject.mapper: trace
+
+# mybatis xml配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

@@ -34,10 +34,10 @@ project-url:
   sell: http://cell.nat300.top
 
 # 设置mapper的日志级别，显示sql语句，适合开发使用，生产环境一般不用。
-logging:
-  level:
-    com.imooc.dataobject.mapper: trace
+#logging:
+#  level:
+#    com.imooc.dataobject.mapper: trace
 
 # mybatis xml配置
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
